@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace archiver
 {
@@ -20,22 +17,10 @@ namespace archiver
         {
             Console.ForegroundColor = ConsoleColor.Gray;
         }
-       /* /// <summary>
-        /// Вывести в консоль информацию о хеше указанного блока
-        /// </summary>
-        /// <param name="id">номер блока</param>
-        /// <param name="hash">хеш</param>
-        public static void DisplayBlockHash(int id, byte[] hash)
+        private static void Red()
         {
-            lock (lockObj)
-            {
-                string hashString = ToString(hash);
-                Green();
-                Console.Write("Блок номер {0} ", id, " : ");
-                Gray();
-                Console.Write(hashString.ToUpper() + "\n\n");
-            }
-        }*/
+            Console.ForegroundColor = ConsoleColor.Red;
+        }
         public static string ToString(byte[] hash)
         {
             StringBuilder builder = new StringBuilder();
@@ -46,7 +31,7 @@ namespace archiver
 
             return builder.ToString();
         }
-        public static void DisplayError(Exception ex)
+        public static void DisplayErrorStack(Exception ex)
         {
             lock (lockObj)
             {
@@ -58,6 +43,16 @@ namespace archiver
                 Console.Write("Вывод стека: ");
                 Gray();
                 Console.Write(ex.StackTrace + "\n\n");
+            }
+        }
+        public static void DisplayError(Exception ex)
+        {
+            lock (lockObj)
+            {
+                Green();
+                Console.Write("ОШИБКА: ");
+                Gray();
+                Console.Write(ex.Message + "\n\n");
             }
         }
         public static void ExitMessage()
@@ -80,6 +75,10 @@ namespace archiver
             Green();
             Console.WriteLine("Для начала работы нажмите любую клавишу");
             Gray();
+        }
+        public static void ShowMessage(string s)
+        {
+            Console.WriteLine(s);
         }
     }
 }
